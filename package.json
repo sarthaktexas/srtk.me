@@ -1,0 +1,20 @@
+{
+  "name": "srtk.me",
+  "version": "1.0.0",
+  "description": "Airtable Based Link Shortener for Sarthak Mohanty",
+  "repository": "https://github.com/sarthaktexas/srtk.me",
+  "author": "Mingjie Jiang<me@sarthakmohanty.me>",
+  "license": "MIT",
+  "dependencies": {
+    "airtable": "^0.7.1",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0"
+  }
+}
