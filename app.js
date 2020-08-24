@@ -21,6 +21,7 @@ app.get('/', function (req, res) {
 app.get('/:slug', async function (req, res) {
   let url;
   await base('Links').select({
+    maxRecords: 1,
     filterByFormula: '{slug} = "' + req.params.slug + '"'
   }).eachPage(function page(records, fetchNextPage) {
     records.forEach(function (record) {
@@ -28,23 +29,9 @@ app.get('/:slug', async function (req, res) {
       fetchNextPage();
     });
   });
-  if (!url.length) {
-    res.send('The URL you specified doesn\'t exist sorry!')
-  } else {
-  res.redirect(url);
-  }
+    if (!url.length) {
+      res.send('The URL you specified doesn\'t exist sorry!');
+    } else {
+    res.redirect(url);
+    }
 });
-
-/*app.get('/:slug', function (req, res) {
-  console.log('{slug} = "' + req.params.slug + '"')
-  base('Links').select({
-    filterByFormula: '{slug} = "' + req.params.slug + '"'
-  }).eachPage(function page(records, fetchNextPage) {
-    records.forEach(function (record) {
-      var url = record.get('destination');
-      fetchNextPage();
-    }, function done() {
-      console.log(url);
-    });
-  });
-});*/
