@@ -61,8 +61,7 @@ app.get('/:slug', async function (req, res) {
       "Country": ipData.country,
       "Continent": ipData.continent,
       "Postal": ipData.postal,
-      "Location": "(" + ipData.location.latitude + "," + ipData.location.longitude + ")",
-      "Accuracy": " " + ipData.location.accuracy_radius,
+      "Location": "(" + ipData.location.latitude + "," + ipData.location.longitude + ") | " + ipData.location.accuracy_radius,
       "Time Zone": ipData.location.time_zone
     }, function (err, record) {
       if (err) {
