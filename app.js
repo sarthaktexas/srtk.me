@@ -1,20 +1,24 @@
-var Airtable = require("airtable");
-var express = require("express");
+require("dotenv").config();
 
+var express = require("express");
 var app = express();
+var Airtable = require("airtable");
+var cloudflare = require('cloudflare-express');
+app.use(cloudflare.restore());
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("srtk.me is up and running on port", port);
 });
 
-require("dotenv").config();
+
 
 var base = new Airtable({
   apiKey: process.env.AIRTABLE_KEY,
 }).base(process.env.AIRTABLE_BASE);
 
 app.get('/', function (req, res) {
+  console.log(req.cf_ip, req.ip);
   res.redirect('https://sarthakmohanty.me');
 });
 
