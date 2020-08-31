@@ -20,6 +20,7 @@ var base = new Airtable({
 
 app.get('/', async function (req, res) {
   console.log((req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress);
+  console.log(cfUserData());
   res.redirect('https://sarthakmohanty.me');
 });
 
