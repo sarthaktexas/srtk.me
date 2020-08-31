@@ -3,24 +3,21 @@ require("dotenv").config();
 var express = require("express");
 var app = express();
 var Airtable = require("airtable");
-var cloudflare = require('cloudflare-express');
-const cfUserData = require('cloudflare-user-data');
-//app.use(cloudflare.restore());
+const geoip = require('geo-from-ip')
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("srtk.me is up and running on port", port);
 });
 
-
-
 var base = new Airtable({
   apiKey: process.env.AIRTABLE_KEY,
 }).base(process.env.AIRTABLE_BASE);
 
 app.get('/', async function (req, res) {
-  console.log((req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress);
-  console.log(cfUserData());
+  var ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
+  console.log(ip);
+  console.log(geoip.allData('199.188.195.120'))
   res.redirect('https://sarthakmohanty.me');
 });
 
