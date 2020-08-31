@@ -14,10 +14,26 @@ var base = new Airtable({
   apiKey: process.env.AIRTABLE_KEY,
 }).base(process.env.AIRTABLE_BASE);
 
-app.get('/', async function (req, res) {
+app.get('/', function (req, res) {
   var ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
-  console.log(ip);
-  console.log(geoip.allData(ip))
+  var ipData = geoip.allData(ip);
+  base('Logging').create({
+    "IP": ip,
+    "Slug": "/",
+    "City": ipData.city,
+    "State": ipData.state,
+    "Country": ipData.country,
+    "Continent": ipData.continent,
+    "Postal": ipData.postal,
+    "Location": (ipData.location.latitude, ipData.location.longitude),
+    "Accuracy": ipData.accuracy,
+    "Time Zone": ipData.time_zone
+  }, function (err, record) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
   res.redirect('https://sarthakmohanty.me');
 });
 
@@ -32,9 +48,28 @@ app.get('/:slug', async function (req, res) {
       fetchNextPage();
     });
   });
-    if (!url.length) {
-      res.send('The URL you specified doesn\'t exist sorry!');
-    } else {
+  if (!url.length) {
+    res.send('The URL you specified doesn\'t exist sorry!');
+  } else {
+    var ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
+    var ipData = geoip.allData(ip);
+    base('Logging').create({
+      "IP": ip,
+      "Slug": req.params.slug,
+      "City": ipData.city,
+      "State": ipData.state,
+      "Country": ipData.country,
+      "Continent": ipData.continent,
+      "Postal": ipData.postal,
+      "Location": (ipData.location.latitude, ipData.location.longitude),
+      "Accuracy": ipData.accuracy,
+      "Time Zone": ipData.time_zone
+    }, function (err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
     res.redirect(url);
-    }
+  }
 });
