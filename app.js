@@ -17,7 +17,7 @@ var base = new Airtable({
 app.get('/', async function (req, res) {
   var ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
   console.log(ip);
-  console.log(geoip.allData('199.188.195.120'))
+  console.log(geoip.allData(ip))
   res.redirect('https://sarthakmohanty.me');
 });
 
