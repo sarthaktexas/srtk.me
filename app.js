@@ -26,7 +26,8 @@ app.get('/', function (req, res) {
     "Continent": ipData.continent,
     "Postal": ipData.postal,
     "Location": "(" + ipData.location.latitude + "," + ipData.location.longitude + ") | AR" + ipData.location.accuracy_radius,
-    "Time Zone": ipData.location.time_zone
+    "Time Zone": ipData.location.time_zone,
+    "User Agent": req.headers['user-agent'],
   }, function (err, record) {
     if (err) {
       console.error(err);
